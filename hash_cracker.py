@@ -5,14 +5,14 @@ from hasher import hasherr
 if sys.argv[1] == "-h" or sys.argv[1] == "--help" or len(sys.argv)<3:
     print("" \
     "[+] Usage python3 hash.cracker.py  <wordlist>  <The hashs file> <algorithm>\n" \
-    "if you want to enable verbose mode just add -v ( Not recomended it cause lower speed )\n"\
-    "the algorithm must be lower chase letter\n" \
-    "supported algorithm:\n" \
-    "md5\n" \
-    "sha1\n" \
-    "sha512\n" \
-    "sha256\n" \
-    "sha224\n")
+    "[+] if you want to enable verbose mode just add -v ( Not recomended it cause lower speed )\n"\
+    "[+] the algorithm must be lower chase letter\n" \
+    "[+] supported algorithm:\n" \
+    "[+] md5\n" \
+    "[+] sha1\n" \
+    "[+] sha512\n" \
+    "[+] sha256\n" \
+    "[+] sha224\n")
     sys.exit()
 
 algorithm=sys.argv[3]
