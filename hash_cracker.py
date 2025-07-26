@@ -10,9 +10,9 @@ if sys.argv[1] == "-h" or sys.argv[1] == "--help" or len(sys.argv)<3:
     "supported algorithm:\n" \
     "md5\n" \
     "sha1\n" \
-    "sha512" \
-    "sha256" \
-    "sha224")
+    "sha512\n" \
+    "sha256\n" \
+    "sha224\n")
     sys.exit()
 
 algorithm=sys.argv[3]
