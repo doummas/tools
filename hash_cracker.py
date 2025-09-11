@@ -1,5 +1,6 @@
 import sys
-from hasher import hasherr
+import hashlib
+
 
 
 if sys.argv[1] == "-h" or sys.argv[1] == "--help" or len(sys.argv)<3:
@@ -13,9 +14,26 @@ if sys.argv[1] == "-h" or sys.argv[1] == "--help" or len(sys.argv)<3:
     "[+] sha512\n" \
     "[+] sha256\n" \
     "[+] sha224\n")
-    sys.exit()
+    exit()
 
 algorithm=sys.argv[3]
+
+algorithm=sys.argv[3]
+def hasherr(password,type):
+    try:
+        if type == "md5":
+            return hashlib.md5(password.encode()).hexdigest()
+        elif type == "sha1":
+            return hashlib.sha1(password.encode()).hexdigest()
+        elif type == "sha512":
+            return hashlib.sha512(password.encode()).hexdigest()
+        elif type == "sha256":
+            return hashlib.sha256(password.encode()).hexdigest()
+        elif type == "sha224":
+            return hashlib.sha224(password.encode()).hexdigest()
+    except KeyboardInterrupt:
+        exit()
+
 
 def hash_file_reader():
     hash_file=sys.argv[2]
@@ -46,26 +64,11 @@ def hashing_wordlist(hash):
                             print(f'Searching({line_count })')
                     if i == len(hash):
                         sys.exit()
-                    
         except UnicodeDecodeError:
             print("Invalid charactere")
         except KeyboardInterrupt:
-                exit()
-                
-                
-                   
+                exit()        
 list=hash_file_reader()
 print(list)
 print(f"Password to crack {len(list)}")
-
 hashing_wordlist(list)
-                    
-                
-
-                
-                
-
-            
-
-            
-hashing_wordlist()
