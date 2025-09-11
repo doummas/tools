@@ -1,8 +1,5 @@
 import hashlib
 
-
-    
-
 def hasherr(password,type):
     try:
         if type == "md5":
