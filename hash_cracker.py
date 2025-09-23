@@ -1,23 +1,25 @@
 import sys
 import hashlib
+import itertools
 
-
-
-if sys.argv[1] == "-h" or sys.argv[1] == "--help" or len(sys.argv)<3:
+def help():
     print("" \
-    "[+] Usage python3 hash.cracker.py  <wordlist>  <The hashs file> <algorithm>\n" \
-    "[+] if you want to enable verbose mode just add -v ( Not recomended it cause lower speed )\n"\
-    "[+] the algorithm must be lower chase letter\n" \
-    "[+] supported algorithm:\n" \
-    "[+] md5\n" \
-    "[+] sha1\n" \
-    "[+] sha512\n" \
-    "[+] sha256\n" \
-    "[+] sha224\n")
+        "[+] Usage python3 hash.cracker.py  <wordlist>  <The hashs file> <algorithm>\n" \
+        "[+] if you want to brute force the hash replace the wordlists section with brute\n" \
+        "[+] if you want to enable verbose mode just add -v ( Not recomended it cause lower speed )\n"\
+        "[+] the algorithm must be lower chase letter\n" \
+        "[+] supported algorithm:\n" \
+        "[+] md5\n" \
+        "[+] sha1\n" \
+        "[+] sha512\n" \
+        "[+] sha256\n" \
+        "[+] sha224\n")
     exit()
-
-algorithm=sys.argv[3]
-
+try:
+    if sys.argv[1] == "-h" or sys.argv[1] == "--help" or len(sys.argv)<3:
+        help()
+except IndexError:
+    help()  
 algorithm=sys.argv[3]
 def hasherr(password,type):
     try:
@@ -33,8 +35,11 @@ def hasherr(password,type):
             return hashlib.sha224(password.encode()).hexdigest()
     except KeyboardInterrupt:
         exit()
-
-
+def combination(min_len,max_len):
+    all_chars = ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=[]{}|;:,.<>?/")
+    for length in range (min_len, max_len+1):
+        for combo in itertools.product(all_chars, repeat=length):
+            yield ''.join(combo)
 def hash_file_reader():
     hash_file=sys.argv[2]
     hash_list=[]
@@ -45,29 +50,55 @@ def hash_file_reader():
     return hash_list
 
 def hashing_wordlist(hash):
-    wordlist = sys.argv[1]
+    if sys.argv[1] != "brute":
+        wordlist = sys.argv[1]   
     line_count = 0
     i=0
-    with open(wordlist , "r",encoding='latin-1') as file:
-        try:
+    if sys.argv[1] != "brute":
+        with open(wordlist , "r",encoding='latin-1') as file:
+            try:
+                while i < len(hash):
+                    for line in file:
+                        line_count += 1
+                        words=line.strip()
+                        hashed_pass=hasherr(words,algorithm)
+                        if hashed_pass in hash:
+                                i+=1
+                                with open("output.txt",'a') as f: 
+                                    f.writelines(f"{words}\n")
+                                
+                        if "-v" in sys.argv:
+                            if "-v" in sys.argv and line_count % 10000 == 0:
+                                print(f'Searching... Attempts: {line_count}, Found: {i} hashes')
+                        if i == len(hash):
+                            print("All hashes founded")
+                            sys.exit()
+            except UnicodeDecodeError:
+                print("Invalid charactere")
+            except KeyboardInterrupt:
+                print("\nYou stopped the program")
+                exit()
+    try:
+        if "brute" in sys.argv:
             while i < len(hash):
-                for line in file:
+                for word in combination(3,30):
                     line_count += 1
-                    words=line.strip()
-                    hashed_pass=hasherr(words,algorithm)
+                    hashed_pass=hasherr(word,algorithm)
                     if hashed_pass in hash:
-                            i+=1
-                            with open("output.txt",'a') as f: 
-                                f.writelines(f"{words}\n")
+                        i+=1
+                        with open ("output.txt", "a") as file:
+                            file.writelines(f"{word}\n")
+                        #hash.remove(hashed_pass)
+                        
                     if "-v" in sys.argv:
-                        if hashed_pass not in hash:
-                            print(f'Searching({line_count })')
-                    if i == len(hash):
-                        sys.exit()
-        except UnicodeDecodeError:
-            print("Invalid charactere")
-        except KeyboardInterrupt:
-                exit()        
+                        if "-v" in sys.argv and line_count % 100000 == 0:
+                            print(f'Searching... Attempts: {line_count}, Found: {i} hashes')
+                        if i == len(hash):
+                            print("All hashes founded")
+                            sys.exit()
+    except KeyboardInterrupt:
+        print("\nYou stopped the program")
+        exit()                                
 list=hash_file_reader()
 print(list)
 print(f"Password to crack {len(list)}")
