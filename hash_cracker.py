@@ -19,8 +19,9 @@ try:
     if sys.argv[1] == "-h" or sys.argv[1] == "--help" or len(sys.argv)<3:
         help()
 except IndexError:
-    help()  
+    help()
 algorithm=sys.argv[3]
+
 def hasherr(password,type):
     try:
         if type == "md5":
@@ -48,10 +49,9 @@ def hash_file_reader():
             line=line.strip()
             hash_list.append(line)
     return hash_list
-
-def hashing_wordlist(hash):
+def hashing_and_finding(hash):
     if sys.argv[1] != "brute":
-        wordlist = sys.argv[1]   
+        wordlist = sys.argv[1]
     line_count = 0
     i=0
     if sys.argv[1] != "brute":
@@ -68,7 +68,7 @@ def hashing_wordlist(hash):
                                     f.writelines(f"{words}\n")
                                 
                         if "-v" in sys.argv:
-                            if "-v" in sys.argv and line_count % 10000 == 0:
+                            if "-v" in sys.argv and line_count % 100000 == 0:
                                 print(f'Searching... Attempts: {line_count}, Found: {i} hashes')
                         if i == len(hash):
                             print("All hashes founded")
@@ -96,10 +96,13 @@ def hashing_wordlist(hash):
                         if i == len(hash):
                             print("All hashes founded")
                             sys.exit()
+    except UnicodeDecodeError:
+        print("Invalid charactere")
     except KeyboardInterrupt:
         print("\nYou stopped the program")
-        exit()                                
+        exit()
+                         
 list=hash_file_reader()
 print(list)
 print(f"Password to crack {len(list)}")
-hashing_wordlist(list)
+hashing_and_finding(list)
