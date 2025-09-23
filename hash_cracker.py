@@ -5,9 +5,9 @@ import itertools
 def help():
     print("" \
         "[+] Usage python3 hash.cracker.py  <wordlist>  <The hashs file> <algorithm>\n" \
-        "[+] if you want to brute force the hash replace the wordlists section with brute\n" \
+        "[+] if you want to brute force the hash with every possible word replace the wordlists section with brute\n" \
         "[+] if you want to enable verbose mode just add -v ( Not recomended it cause lower speed )\n"\
-        "[+] the algorithm must be lower chase letter\n" \
+        "[+] the algorithm must be lower case letter\n" \
         "[+] supported algorithm:\n" \
         "[+] md5\n" \
         "[+] sha1\n" \
