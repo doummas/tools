@@ -68,8 +68,8 @@ def hashing_and_finding(hash):
                                     f.writelines(f"{words}\n")
                                 
                         if "-v" in sys.argv:
-                            if "-v" in sys.argv and line_count % 100000 == 0:
-                                print(f'Searching... Attempts: {line_count}, Found: {i} hashes')
+                            if "-v" in sys.argv and line_count % 1000000 == 0:
+                                print(f'Searching... Attempts: {line_count//1000000} millions, Found: {i} hashes')
                         if i == len(hash):
                             print("All hashes founded")
                             sys.exit()
@@ -91,8 +91,8 @@ def hashing_and_finding(hash):
                         #hash.remove(hashed_pass)
                         
                     if "-v" in sys.argv:
-                        if "-v" in sys.argv and line_count % 100000 == 0:
-                            print(f'Searching... Attempts: {line_count}, Found: {i} hashes')
+                        if "-v" in sys.argv and line_count % 1000000 == 0:
+                            print(f'Searching... Attempts: {line_count//1000000} millions, Found: {i} hashes')
                         if i == len(hash):
                             print("All hashes founded")
                             sys.exit()
