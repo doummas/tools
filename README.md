@@ -1,2 +1,2 @@
 # tools
-this is my offensive python scripts repository i've created 
+this is my offensive  scripts and tools repository i've created 
