@@ -39,8 +39,9 @@ try:
     website=sys.argv[1]
     if website == "-h" or website=="--help" or website=="":
         help()
-    code=get_source_code(website)
-    filter_source_code(code)
+    else:
+        code=get_source_code(website)
+        filter_source_code(code)
 except IndexError:
     help()
 
