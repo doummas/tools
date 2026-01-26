@@ -1,6 +1,7 @@
 import sys
 import requests
 
+#This script used to grab all source directory of website from their source code
 
 def get_source_code(website):
     source=requests.get(website)
