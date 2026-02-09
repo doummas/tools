@@ -56,7 +56,6 @@ def encode(shell,enco):
         shell = en_bytes.decode('utf-8')
     return shell
 
-    return shell
 def display (dis,shell):
     if dis == "f":
         with open ("payload.txt","a") as f:
