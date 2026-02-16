@@ -2,7 +2,7 @@ import sys
 import base64
 import netifaces
 
-
+# this just the  beginning of big web gui pentesting project 
 def help():
     print(f"Usage :" \
     "{__file__} [option] [encoded or not] type port interface  \n" \
